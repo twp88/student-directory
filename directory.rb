@@ -14,17 +14,28 @@
  "Norman Bates"
  ]
  
- 
- puts "The students of Villians Academy"
- puts "-----------------------"
-students.each do |student|
-    puts student 
-end
+ def print_header
+    puts "The students of Villians Academy"
+    puts "-----------------------"
+ end
+
+ def printr(names) 
+    names.each do |name|
+    puts name
+    end
+ end
+
+
 
 # finally, we print the total number of students
 
-print "Overall, we have, we have #{student.count} great students. "
-#its's important that we print() doesn't ass new line characters
+ def print_footer(names)
+
+    print "Overall, we have, we have #{names.count} great students. "
+    #its's important that we print() doesn't ass new line characters
+ end
 
 
-
+print_header
+printr(students)
+print_footer(students)
