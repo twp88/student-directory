@@ -27,18 +27,18 @@ students = input_students
 
 
  def print_header
-    puts "The students of Villians Academy"
-    puts "-----------------------"
+    puts "The students of Villians Academy".center(50)
+    puts "-----------------------".center(50)
  end
 
  def printr(students) 
-    len = students.length
-    count = 0
-    while count <= len
-        puts students[count]
-        count += 1
+    students.select do |student|  
+        meems = ''
+        meems = "#{student[:name]} (#{student[:cohort]} cohort)"
+        puts meems.center(50)
     end
  end
+
 
 
 
@@ -46,7 +46,7 @@ students = input_students
 
  def print_footer(names)
 
-    print "Overall, we have, we have #{names.count} great students. "
+    print "Overall, we have, we have #{names.count} great students. ".center(50)
     #its's important that we print() doesn't ass new line characters
  end
 
