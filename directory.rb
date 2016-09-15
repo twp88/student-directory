@@ -25,12 +25,11 @@ students = input_students
  end
 
  def printr(students) 
-    students.select do |student|  
-        if student[:name].length <= 12
-            puts "#{student[:name]} (#{student[:cohort]} cohort)"
-       
-        end
-   
+    len = students.length
+    count = 0
+    while count <= len
+        puts students[count]
+        count += 1
     end
  end
 
