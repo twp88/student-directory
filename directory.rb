@@ -21,7 +21,12 @@ def input_students
         
         #add the student hash to the array
         students << {name: name, hobbies: hobbies, country_of_birth: country_of_birth, height: height, cohort: cohort}
-        puts "Now we have #{students.count} students"
+        if students.count == 1
+            puts "Now we have #{students.count} student"
+        elsif
+            puts "Now we have #{students.count} students"
+        end
+        
         #get another name from the user
         puts "Please enter the next students name, or press enter to leave."
         name = gets.chomp
@@ -51,8 +56,11 @@ students = input_students
 # finally, we print the total number of students
 
  def print_footer(names)
-
-    print "Overall, we have, we have #{names.count} great students. ".center(50)
+    if names.count == 1
+        print "Overall, we have, we have #{names.count} great student. ".center(50)
+    elsif names.count > 1
+        print "Overall, we have, we have #{names.count} great students. ".center(50)
+    end
     #its's important that we print() doesn't ass new line characters
  end
 
