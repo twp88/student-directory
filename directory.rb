@@ -25,8 +25,12 @@ students = input_students
  end
 
  def printr(students) 
-    students.each_with_index do |student, index|
-    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
+    students.select do |student|  
+        if student[:name][0] == "B"
+            puts "#{student[:name]} (#{student[:cohort]} cohort)"
+       
+        end
+   
     end
  end
 
