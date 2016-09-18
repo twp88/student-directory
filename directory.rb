@@ -155,7 +155,9 @@ end
 
 def try_load_students
    filename = ARGV.first #first arguement from the command line
-   return if filename.nil?
+    if filename.nil?
+       filename = "students.csv"
+    end
    
    if File.exists?(filename)#if it exists
        load_students(filename)
