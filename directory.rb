@@ -5,12 +5,12 @@ def input_students
     #create empty array
     @students = []
     #get the first name
-    name = gets
+    name = gets.chomp
     
     #make sure the user enters a name 
     if name.empty? || name == '' || name == nil
         puts "Please enter a name to start"
-        name = gets
+        name = gets.chomp
     end
     
     
@@ -49,7 +49,7 @@ def input_students
         end
         
         #add the student hash to the array
-        @students << {name: name, hobbies: hobbies, country_of_birth: country_of_birth, height: height, cohort: cohort}
+        @students << {name: name, cohort: cohort, hobbies: hobbies, country_of_birth: country_of_birth, height: height}
         if @students.count == 1
             puts "Now we have #{@students.count} student"
         elsif
@@ -73,8 +73,7 @@ end
  def printr(students) 
     @students.select do |student|  
         
-        puts "#{student[:name]}".center(50)
-        puts "(#{student[:cohort]} cohort)".center(50)
+        puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
         puts "Their hobby is #{student[:hobbies]}".center(50)
         puts "They were born in #{student[:country_of_birth]}".center(50)
         puts "They are #{student[:height]} tall".center(50)
@@ -101,7 +100,8 @@ def print_menu
         puts "Choose an option"
         puts "1. Input student information"
         puts "2. Show the students"
-        puts "3. Save the list of students"
+        puts "3. Save the list of students to students.csv"
+        puts "4. Load students from students.csv"
         puts "9. Exit the program"
 end
 
@@ -121,6 +121,8 @@ def process(selection)
             show_students
         when "3"
             save_students
+        when "4"
+            load_students
         when "9"
             exit
         else
@@ -138,18 +140,30 @@ def interactive_menu
 end    
 
 def save_students
-    #open the file to which what we be going to write to
-    file = File.open("students.csv", "w")
-    #iterate students array
-    @students.each do |student|
-        student_data = [student[:name]], [student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line 
-    end 
-    file.close
-end 
-    
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  puts @students.inspect
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
         
+        
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
+
         
     
 interactive_menu
