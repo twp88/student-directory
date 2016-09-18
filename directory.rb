@@ -1,4 +1,8 @@
 @students = []
+def add_to_students(name, cohort)
+    @students << {name: name, cohort: cohort.to_sym}
+end
+
 def input_students
     
     puts "Please enter the name of the students"
@@ -25,24 +29,6 @@ def input_students
         
     #while the name is not empty, repeat this code
     while !name.empty? do
-       
-        
-        
-        puts "Do you have a hobby?"
-        hobbies = STDIN.gets.chomp
-        if hobbies[-1] == ' '
-            hobbies.chop!
-        end
-        puts "Where were you born?"
-        country_of_birth = STDIN.gets.chomp
-        if country_of_birth[-1] == ' '
-            country_of_birth.chop!
-        end
-        puts "How tall are you?"
-        height = STDIN.gets.chomp
-        if height[-1] == ' '
-            height.chop!
-        end
         puts "Which cohort are you studying in?"
         cohort = STDIN.gets.chomp
         if cohort.empty?
@@ -50,7 +36,7 @@ def input_students
         end
         
         #add the student hash to the array
-        @students << {name: name, cohort: cohort, hobbies: hobbies, country_of_birth: country_of_birth, height: height}
+        add_to_students(name, cohort)#using method to add to students array
         if @students.count == 1
             puts "Now we have #{@students.count} student"
         elsif
@@ -161,7 +147,8 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+
+    add_to_students(name, cohort)#using method to add to students array
   end
   file.close
 end
@@ -177,6 +164,8 @@ def try_load_students
         puts "Sorry #{filename} doesn't exist"
         exit
     end
+    
+
     
 end
         
