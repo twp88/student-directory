@@ -1,16 +1,17 @@
 @students = []
 def input_students
+    
     puts "Please enter the name of the students"
     puts "To finish just hit return twice"
     #create empty array
     @students = []
     #get the first name
-    name = gets.chomp
+    name = STDIN.gets.chomp
     
     #make sure the user enters a name 
     if name.empty? || name == '' || name == nil
         puts "Please enter a name to start"
-        name = gets.chomp
+        name = STDIN.gets.chomp
     end
     
     
@@ -28,22 +29,22 @@ def input_students
         
         
         puts "Do you have a hobby?"
-        hobbies = gets
+        hobbies = STDIN.gets.chomp
         if hobbies[-1] == ' '
             hobbies.chop!
         end
         puts "Where were you born?"
-        country_of_birth = gets
+        country_of_birth = STDIN.gets.chomp
         if country_of_birth[-1] == ' '
             country_of_birth.chop!
         end
         puts "How tall are you?"
-        height = gets
+        height = STDIN.gets.chomp
         if height[-1] == ' '
             height.chop!
         end
         puts "Which cohort are you studying in?"
-        cohort = gets.chomp
+        cohort = STDIN.gets.chomp
         if cohort.empty?
             cohort = "november"
         end
@@ -58,7 +59,7 @@ def input_students
         
         #get another name from the user
         puts "Please enter the next students name, or press enter to leave."
-        name = gets.chomp
+        name = STDIN.gets.chomp
     end
     
 end
@@ -113,6 +114,7 @@ def show_students
 end
 
 def process(selection)
+        
         #3.do what the user wants
        case selection
        when "1"
@@ -132,9 +134,10 @@ end
 
 
 def interactive_menu
+    try_load_students
     loop do 
         print_menu
-        process(gets.chomp)
+        process(STDIN.gets.chomp)
     end
     
 end    
@@ -154,8 +157,8 @@ end
 
         
         
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -163,7 +166,19 @@ def load_students
   file.close
 end
 
-
+def try_load_students
+   filename = ARGV.first #first arguement from the command line
+   return if filename.nil?
+   
+   if File.exists?(filename)#if it exists
+       load_students(filename)
+       puts "Loaded #{@students.count} from #{filename}"
+    else #if it doesn't exist
+        puts "Sorry #{filename} doesn't exist"
+        exit
+    end
+    
+end
         
     
 interactive_menu
