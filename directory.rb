@@ -1,8 +1,9 @@
+@students = []
 def input_students
     puts "Please enter the name of the students"
     puts "To finish just hit return twice"
     #create empty array
-    students = []
+    @students = []
     #get the first name
     name = gets
     
@@ -48,11 +49,11 @@ def input_students
         end
         
         #add the student hash to the array
-        students << {name: name, hobbies: hobbies, country_of_birth: country_of_birth, height: height, cohort: cohort}
-        if students.count == 1
-            puts "Now we have #{students.count} student"
+        @students << {name: name, hobbies: hobbies, country_of_birth: country_of_birth, height: height, cohort: cohort}
+        if @students.count == 1
+            puts "Now we have #{@students.count} student"
         elsif
-            puts "Now we have #{students.count} students"
+            puts "Now we have #{@students.count} students"
         end
         
         #get another name from the user
@@ -60,7 +61,6 @@ def input_students
         name = gets.chomp
     end
     
-    students
 end
 
 
@@ -71,7 +71,7 @@ end
  end
 
  def printr(students) 
-    students.select do |student|  
+    @students.select do |student|  
         
         puts "#{student[:name]}".center(50)
         puts "(#{student[:cohort]} cohort)".center(50)
@@ -96,36 +96,40 @@ end
     #its's important that we print() doesn't ass new line characters
  end
 
-
-
-
-def interactive_menu
-    students =[]
-    loop do 
-        #1. Print the options available
+def print_menu
+            #1. Print the options available
         puts "Choose an option"
         puts "1. Input student information"
         puts "2. Show the students"
         puts "9. Exit the program"
-       
-       #2. Read the input, save it to variable
-       selection = gets.chomp
-       #3.do what the user wants
+end
+
+
+def show_students
+        print_header
+        printr(@students)
+        print_footer(@students)
+end
+
+def process(selection)
+        #3.do what the user wants
        case selection
        when "1"
-           students = input_students
+           input_students
         when "2"
-            print_header
-            printr(students)
-            print_footer(students)
+            show_students
         when "9"
             exit
         else
             puts "What doo you mean?"
         end
-           
-       
-        
+end
+
+
+def interactive_menu
+    loop do 
+        print_menu
+        process(gets.chomp)
     end
     
 end    
