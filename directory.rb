@@ -1,15 +1,31 @@
 def input_students
     puts "Please enter the name of the students"
-    puts "To finish just hit renturn twice"
+    puts "To finish just hit return twice"
     #create empty array
     students = []
     #get the first name
     name = gets
+    
+    #make sure the user enters a name 
+    if name.empty? || name == '' || name == nil
+        puts "Please enter a name to start"
+        name = gets
+    end
+    
+    
+    #chomp alternative
     if name[-1] == ' '
             name.chop!
-        end
+    end
+    
+    
+   
+        
     #while the name is not empty, repeat this code
     while !name.empty? do
+       
+        
+        
         puts "Do you have a hobby?"
         hobbies = gets
         if hobbies[-1] == ' '
@@ -46,7 +62,7 @@ def input_students
     
     students
 end
-students = input_students
+
 
 
  def print_header
@@ -81,6 +97,37 @@ students = input_students
  end
 
 
-print_header
-printr(students)
-print_footer(students)
+
+
+def interactive_menu
+    students =[]
+    loop do 
+        #1. Print the options available
+        puts "Choose an option"
+        puts "1. Input student information"
+        puts "2. Show the students"
+        puts "9. Exit the program"
+       
+       #2. Read the input, save it to variable
+       selection = gets.chomp
+       #3.do what the user wants
+       case selection
+       when "1"
+           students = input_students
+        when "2"
+            print_header
+            printr(students)
+            print_footer(students)
+        when "9"
+            exit
+        else
+            puts "What doo you mean?"
+        end
+           
+       
+        
+    end
+    
+end    
+    
+interactive_menu
