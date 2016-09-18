@@ -1,6 +1,7 @@
 @students = []
 def add_to_students(name, cohort)
     @students << {name: name, cohort: cohort.to_sym}
+    puts "Students has been successfully updated"
 end
 
 def input_students
@@ -131,6 +132,7 @@ end
 def save_students
   # open the file for writing
   file = File.open("students.csv", "w")
+  puts "The file students.csv has been opened"
   # iterate over the array of students
   puts @students.inspect
   @students.each do |student|
@@ -138,6 +140,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "Students have been successfully saved"
   file.close
 end
 
@@ -150,6 +153,7 @@ def load_students(filename = "students.csv")
 
     add_to_students(name, cohort)#using method to add to students array
   end
+  puts "Students.csv has been successfully loaded"
   file.close
 end
 
