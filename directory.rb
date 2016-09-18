@@ -4,19 +4,31 @@ def input_students
     #create empty array
     students = []
     #get the first name
-    name = gets.chomp
+    name = gets
+    if name[-1] == ' '
+            name.chop!
+        end
     #while the name is not empty, repeat this code
     while !name.empty? do
         puts "Do you have a hobby?"
-        hobbies = gets.chomp
+        hobbies = gets
+        if hobbies[-1] == ' '
+            hobbies.chop!
+        end
         puts "Where were you born?"
-        country_of_birth = gets.chomp
+        country_of_birth = gets
+        if country_of_birth[-1] == ' '
+            country_of_birth.chop!
+        end
         puts "How tall are you?"
-        height = gets.chomp
+        height = gets
+        if height[-1] == ' '
+            height.chop!
+        end
         puts "Which cohort are you studying in?"
         cohort = gets.chomp
         if cohort.empty?
-            cohort = :november
+            cohort = "november"
         end
         
         #add the student hash to the array
@@ -44,9 +56,13 @@ students = input_students
 
  def printr(students) 
     students.select do |student|  
-        meems = ''
-        meems = "#{student[:name]} (#{student[:cohort]} cohort)"
-        puts meems.center(50)
+        
+        puts "#{student[:name]}".center(50)
+        puts "(#{student[:cohort]} cohort)".center(50)
+        puts "Their hobby is #{student[:hobbies]}".center(50)
+        puts "They were born in #{student[:country_of_birth]}".center(50)
+        puts "They are #{student[:height]} tall".center(50)
+        
     end
  end
 
