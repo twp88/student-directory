@@ -131,10 +131,11 @@ end
 
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
-  puts "The file students.csv has been opened"
+  puts "To which file do you wish to save?"
+  breeps = STDIN.gets.chomp
+  file = File.open(breeps, "w")
+  puts "The file #{breeps} has been opened"
   # iterate over the array of students
-  puts @students.inspect
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -146,7 +147,7 @@ end
 
         
         
-def load_students(filename = "students.csv")
+def load_students(filename = STDIN.gets.chomp)
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
@@ -158,7 +159,8 @@ def load_students(filename = "students.csv")
 end
 
 def try_load_students
-   filename = ARGV.first #first arguement from the command line
+    puts "Please enter a name of a file that you wish to load"
+   filename = STDIN.gets.chomp #first arguement from the command line
     if filename.nil?
        filename = "students.csv"
     end
