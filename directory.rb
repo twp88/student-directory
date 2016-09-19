@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 def add_to_students(name, cohort)
     @students << {name: name, cohort: cohort.to_sym}
@@ -131,33 +132,31 @@ end
 
 def save_students
   # open the file for writing
-  puts "To which file do you wish to save?"
-  breeps = STDIN.gets.chomp
-  file = File.open(breeps, "w")do |file|
-      puts "The file #{file} has been opened"
-      # iterate over the array of students
-      @students.each do |student|
-        student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
-      end
-    end  
-      puts "Students have been successfully saved"
-    
+  file = File.open("students.csv", "w")
+  puts "The file students.csv has been opened"
+  # iterate over the array of students
+  puts @students.inspect
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  puts "Students have been successfully saved"
+  file.close
 end
 
         
         
 def load_students(filename = STDIN.gets.chomp)
 
-    File.open(filename, "r")do |x|
-        x.readlines.each do |line|
-            name, cohort = line.chomp.split(',')
+    CSV.foreach(filename) do |row|
+        line = row.inspect 
+        name, cohort = line.chomp.split(',')
     
-            add_to_students(name, cohort)#using method to add to students array
+        add_to_students(name, cohort)#using method to add to students array
       end
       puts "Students.csv has been successfully loaded"
-    end
+    
 end
 
 def try_load_students
