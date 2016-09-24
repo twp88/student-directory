@@ -1,11 +1,14 @@
+require 'csv'
 @students = []
 def add_to_students(name, cohort)
     @students << {name: name, cohort: cohort.to_sym}
+    puts "Students has been successfully updated"
 end
 
 def input_students
     
-    puts "Please enter the name of the students. \nTo finish just hit return twice" #refactored code
+    puts "Please enter the name of the students"
+    puts "To finish just hit return twice"
     #create empty array
     @students = []
     #get the first name
@@ -52,8 +55,8 @@ end
 
 
  def print_header
-    puts "The students of Villians Academy \n -----------------------".center(50) #refactoring some code
-    
+    puts "The students of Villians Academy".center(50)
+    puts "-----------------------".center(50)
  end
 
  def printr(students) 
@@ -73,11 +76,11 @@ end
 # finally, we print the total number of students
 
  def print_footer(names)
-
-
-    #refactored code
-    names.count == 1 ? (print "Overall, we have, we have #{names.count} great student. ".center(50)) : (print "Overall, we have, we have #{names.count} great students. ".center(50))
-        
+    if names.count == 1
+        print "Overall, we have, we have #{names.count} great student. ".center(50)
+    elsif names.count > 1
+        print "Overall, we have, we have #{names.count} great students. ".center(50)
+    end
     #its's important that we print() doesn't ass new line characters
  end
 
@@ -129,33 +132,34 @@ end
 
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  puts @students.inspect
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
+CSV.open("./students.csv", "wb") do |csv|
+    @students.each do |student|
+        csv << [student[:name], student[:cohort]]
+    end 
+end 
 end
 
         
         
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
+def load_students(filename = STDIN.gets.chomp)
 
-    add_to_students(name, cohort)#using method to add to students array
-  end
-  file.close
+    CSV.foreach(filename) do |row|
+        line = row.inspect 
+        name, cohort = line.chomp.split(',')
+    
+        add_to_students(name, cohort)#using method to add to students array
+      end
+      puts "Students.csv has been successfully loaded"
+    
 end
 
 def try_load_students
-   filename = ARGV.first #first arguement from the command line
-   filename = "students.csv" if filename.nil? #refactored code
-      
+    puts "Please enter a name of a file that you wish to load"
+   filename = STDIN.gets.chomp #first arguement from the command line
+    if filename.nil?
+       filename = "students.csv"
+    end
+   
    if File.exists?(filename)#if it exists
        load_students(filename)
        puts "Loaded #{@students.count} from #{filename}"
